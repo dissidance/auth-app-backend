@@ -8,7 +8,7 @@ import NotFoundError from '../errors/NotFoundError';
 async function signUp(ctx) {
   const { email, password } = ctx.request.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: email.toLowerCase() });
 
   if (user) throw new BadRequestError('User exist');
 

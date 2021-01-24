@@ -1,7 +1,6 @@
 import Koa from 'koa';
 import cors from '@koa/cors';
 import koaBody from 'koa-body';
-import validator from 'koa-validate';
 import db from './db';
 import api from './routes/routes';
 import cfg from './config';
@@ -14,8 +13,6 @@ async function startServer() {
 
   const app = new Koa();
 
-  validator(app);
-
   app
     .use(koaBody())
     .use(cors({
@@ -25,9 +22,6 @@ async function startServer() {
       },
       credentials: true,
     }))
-    // .use(httpLogger)
-    // .use(passport.initialize())
-    // .use(passport.session())
     .use(api.routes())
     .listen(cfg.PORT, () => console.log(`Start server on ${cfg.PORT}`));
 }
