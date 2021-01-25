@@ -6,6 +6,14 @@ import User from '../models/user';
 import BadRequestError from '../errors/BadRequestError';
 import NotFoundError from '../errors/NotFoundError';
 
+type UserType = {
+  email: string,
+  password: string,
+  publicData?: {
+    email: string
+  }
+};
+
 async function signUp(ctx: Context) {
   const { email, password } = ctx.request.body;
 
@@ -17,15 +25,15 @@ async function signUp(ctx: Context) {
 
   const newUser = await User.create({
     email: email.toLowerCase(), password: hash,
-  }) as any;
+  }) as unknown as UserType | null;
 
-  ctx.body = newUser.publicData;
+  ctx.body = newUser!.publicData;
 }
 
 async function signIn(ctx: Context) {
   const { email, password } = ctx.request.body;
 
-  const user = await User.findOne({ email }) as any;
+  const user = await User.findOne({ email }) as UserType | null;
 
   if (!user) throw new NotFoundError('User not found');
 
