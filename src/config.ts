@@ -7,14 +7,12 @@ dotenv.config();
 interface Config {
   NODE_ENV: string
   PORT: number
-  SECRET: string
   MONGO_URL: string
 }
 
 const {
   NODE_ENV,
   PORT,
-  SECRET,
   MONGO_URL,
 } = process.env;
 
@@ -22,5 +20,4 @@ export default {
   NODE_ENV: NODE_ENV!,
   PORT: parseInt(PORT!, 10),
   MONGO_URL: MONGO_URL!,
-  SECRET: SECRET!,
 } as Config;
