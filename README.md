@@ -1,1 +1,3 @@
-# auth-app-backend
+### `npm install`
+
+### `npm start`
