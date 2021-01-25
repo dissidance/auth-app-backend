@@ -1,7 +1,18 @@
 import { Context, Next } from 'koa';
-import { checkPayload } from '../utils/utils';
+import BadRequestError from '../errors/BadRequestError';
+import { checkPayload, checkEmail } from '../utils/utils';
 
-function validateUserPayload(ctx: Context, next: Next) {
+function validateSignIn(ctx: Context, next: Next) {
+  const { email, password } = ctx.request.body;
+
+  if (!checkEmail(email)) throw new BadRequestError('Invalid email');
+
+  if (!password.length) throw new BadRequestError('Invalid password');
+
+  return next();
+}
+
+function validateSignUp(ctx: Context, next: Next) {
   const { email, password } = ctx.request.body;
 
   checkPayload({ email, password });
@@ -10,4 +21,4 @@ function validateUserPayload(ctx: Context, next: Next) {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export { validateUserPayload };
+export { validateSignIn, validateSignUp };

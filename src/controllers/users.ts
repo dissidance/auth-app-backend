@@ -33,7 +33,7 @@ async function signUp(ctx: Context) {
 async function signIn(ctx: Context) {
   const { email, password } = ctx.request.body;
 
-  const user = await User.findOne({ email }) as UserType | null;
+  const user = await User.findOne({ email: email.toLowerCase() }) as UserType | null;
 
   if (!user) throw new NotFoundError('User not found');
 
