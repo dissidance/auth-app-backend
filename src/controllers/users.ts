@@ -1,11 +1,12 @@
 import bcrypt from 'bcryptjs';
 
+import { Context } from 'koa';
 import User from '../models/user';
 
 import BadRequestError from '../errors/BadRequestError';
 import NotFoundError from '../errors/NotFoundError';
 
-async function signUp(ctx) {
+async function signUp(ctx: Context) {
   const { email, password } = ctx.request.body;
 
   const user = await User.findOne({ email: email.toLowerCase() });
@@ -21,7 +22,7 @@ async function signUp(ctx) {
   ctx.body = newUser.publicData;
 }
 
-async function signIn(ctx) {
+async function signIn(ctx: Context) {
   const { email, password } = ctx.request.body;
 
   const user = await User.findOne({ email }) as any;

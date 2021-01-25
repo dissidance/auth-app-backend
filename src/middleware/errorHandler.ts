@@ -1,4 +1,6 @@
-async function errorHandler(ctx, next) {
+import { Context, Next } from 'koa';
+
+async function errorHandler(ctx: Context, next: Next) {
   try {
     await next();
   } catch (err) {

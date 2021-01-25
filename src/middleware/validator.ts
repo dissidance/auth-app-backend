@@ -1,16 +1,10 @@
-import BadRequestError from '../errors/BadRequestError';
+import { Context, Next } from 'koa';
+import { checkPayload } from '../utils/utils';
 
-function validateUserPayload(ctx, next) {
+function validateUserPayload(ctx: Context, next: Next) {
   const { email, password } = ctx.request.body;
 
-  const regexEmail = /^[A-Za-z0-9\-_]+@\w+\.\w{2,}$/;
-  const regexPassword = /(?=.*\d)(?=.*[a-z])?(?=.*[A-Z])(?=.*[!@#$%^&*()]).{8,}/;
-
-  const isValidEmail = regexEmail.test(email);
-  const isValidPassword = regexPassword.test(password);
-
-  if (!isValidEmail) throw new BadRequestError('Invalid email');
-  if (!isValidPassword) throw new BadRequestError('Invalid password');
+  checkPayload({ email, password });
 
   return next();
 }

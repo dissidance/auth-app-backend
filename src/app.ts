@@ -8,12 +8,12 @@ import cfg from './config';
 const validOrigins: string[] = ['http://localhost',
   'http://localhost:3000'];
 
-async function startServer() {
+const app = new Koa();
+
+export default async function startServer() {
   await db.init();
 
-  const app = new Koa();
-
-  app
+  return app
     .use(koaBody())
     .use(cors({
       // eslint-disable-next-line consistent-return
@@ -25,5 +25,3 @@ async function startServer() {
     .use(api.routes())
     .listen(cfg.PORT, () => console.log(`Start server on ${cfg.PORT}`));
 }
-
-startServer();
